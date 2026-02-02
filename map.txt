@@ -1,0 +1,37 @@
+EVENT :
+
+DATA : 
+    {
+      "id": 1,
+      "title": "National Debate Festival 2024",
+      "description": "Bangladesh's largest debate competition with participants from all 64 districts",
+      "date": "March 15-20, 2024",
+      "time": "9:00 AM - 6:00 PM",
+      "location": "Dhaka University Campus",
+      "type": "upcoming",
+      "category": "national",
+      "participants": "5000+",
+      "registrationDeadline": "March 10, 2024",
+      "status": "Open for Registration",
+      "image": "https://i.ibb.co.com/HfwY09Kt/Gemini-Generated-Image-sozxjesozxjesozx.png"
+    },
+
+  const filterOptions = [
+    { id: 'all', label: 'All Events' },
+    { id: 'upcoming', label: 'Upcoming' },
+    { id: 'ongoing', label: 'Ongoing' },
+    { id: 'completed', label: 'Completed' },
+    { id: 'national', label: 'National' },
+    { id: 'international', label: 'International' },
+    { id: 'training', label: 'Training' }
+  ];
+
+  // Function to get category label
+  const getCategoryLabel = (category) => {
+    const labels = {
+      'national': 'National',
+      'international': 'International',
+      'training': 'Training'
+    };
+    return labels[category] || category;
+  };
