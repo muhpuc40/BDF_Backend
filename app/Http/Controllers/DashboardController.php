@@ -8,7 +8,8 @@ use App\Models\Event;
 use App\Models\News;
 use App\Models\Committee;
 use App\Models\Announcement;
-use App\Models\User; // For future use
+use App\Models\Hall;
+use App\Models\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -108,12 +109,28 @@ class DashboardController extends Controller
                     'color' => 'success'
                 ];
             });
+
+
+        $recentHalls = Hall::latest()
+            ->take($limit)
+            ->get()
+            ->map(function ($hall) {
+                return [
+                    'type' => 'Hall of Fame',
+                    'title' => $hall->name,
+                    'description' => 'New hall of Fame added: ' . $hall->name,
+                    'created_at' => $hall->created_at,
+                    'icon' => 'fas fa-building',
+                    'color' => 'secondary'
+                ];
+            });
         
         // Combine all activities
         $activities = $activities->merge($recentEvents)
             ->merge($recentNews)
             ->merge($recentAnnouncements)
-            ->merge($recentCommittees);
+            ->merge($recentCommittees)
+            ->merge($recentHalls);
         
         // Sort by creation date (newest first) and take only specified limit
         return $activities->sortByDesc('created_at')->take($limit);
