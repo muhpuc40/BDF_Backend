@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class NewsAnnouncementController extends Controller
 {

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\NewsAnnouncementController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\HallController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -35,3 +36,9 @@ Route::get('/announcements', [NewsAnnouncementController::class, 'announcementIn
 Route::get('/announcements/create', [NewsAnnouncementController::class, 'announcementCreate'])->name('announcements.create');
 Route::post('/announcements', [NewsAnnouncementController::class, 'announcementStore'])->name('announcements.store');
 Route::get('/announcements/{announcement}', [NewsAnnouncementController::class, 'announcementShow'])->name('announcements.show');
+
+// Hall Routes
+Route::get('/hall', [HallController::class, 'index'])->name('hall.index');
+Route::get('/hall/create', [HallController::class, 'create'])->name('hall.create');
+Route::post('/hall', [HallController::class, 'store'])->name('hall.store');
+Route::get('/hall/{hall}', [HallController::class, 'show'])->name('hall.show');

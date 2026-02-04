@@ -4,6 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\NewsAnnouncementController;
+use App\Http\Controllers\HallController;
+
+Route::get('/hall', [HallController::class, 'apiIndex']);
+
+Route::get('/events', [EventController::class, 'apiIndex']);
+
+Route::get('/committees', [CommitteeController::class, 'apiIndex']);
+
+Route::get('/news', [NewsAnnouncementController::class, 'apiNews']);
+
+Route::get('/announcements', [NewsAnnouncementController::class, 'apiAnnouncements']);
 
 Route::get('/', function () {
     return response()->json([
@@ -44,11 +55,3 @@ Route::get('/', function () {
         'Developer' => "Minhaj Uddin Hassan"
     ]);
 });
-
-Route::get('/events', [EventController::class, 'apiIndex']);
-
-Route::get('/committees', [CommitteeController::class, 'apiIndex']);
-
-Route::get('/news', [NewsAnnouncementController::class, 'apiNews']);
-
-Route::get('/announcements', [NewsAnnouncementController::class, 'apiAnnouncements']);
