@@ -70,6 +70,16 @@
                             <i class="fas fa-calendar-alt me-2"></i>View Event
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/directory/create">
+                            <i class="fas fa-plus-circle me-2"></i>Add Club
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/directory">
+                            <i class="fas fa-calendar-alt me-2"></i>View Club
+                        </a>
+                    </li>
                 </ul>
 
                 <h6 class="mt-4">COMMITTEE</h6>
@@ -87,7 +97,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/hall/create">
-                            <i class="fas fa-user-plus me-2"></i>Add Hallof Fame
+                            <i class="fas fa-user-plus me-2"></i>Add Hall of Fame
                         </a>
                     </li>
                     <li class="nav-item">
@@ -146,8 +156,17 @@
                                 <i class="fas fa-calendar-alt me-2"></i>View Event
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/directory/create">
+                                <i class="fas fa-plus-circle me-2"></i>Add Club
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/directory">
+                                <i class="fas fa-calendar-alt me-2"></i>View Club
+                            </a>
+                        </li>
                     </ul>
-
                     <h5 class="mt-4">COMMITTEE</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -162,7 +181,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/hall/create">
-                                <i class="fas fa-user-plus me-2"></i>Add Hallof Fame
+                                <i class="fas fa-user-plus me-2"></i>Add Hall of Fame
                             </a>
                         </li>
                         <li class="nav-item">

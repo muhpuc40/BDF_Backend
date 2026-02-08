@@ -6,6 +6,7 @@ use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\NewsAnnouncementController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\DirectoryController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -42,3 +43,9 @@ Route::get('/hall', [HallController::class, 'index'])->name('hall.index');
 Route::get('/hall/create', [HallController::class, 'create'])->name('hall.create');
 Route::post('/hall', [HallController::class, 'store'])->name('hall.store');
 Route::get('/hall/{hall}', [HallController::class, 'show'])->name('hall.show');
+
+//Directory Routes
+Route::get('/directory', [DirectoryController::class, 'index'])->name('directory.index');
+Route::get('/directory/create', [DirectoryController::class, 'create'])->name('directory.create');
+Route::post('/directory', [DirectoryController::class, 'store'])->name('directory.store');
+Route::get('/directory/{directory}', [DirectoryController::class, 'show'])->name('directory.show');

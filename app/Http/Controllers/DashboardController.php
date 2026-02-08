@@ -9,6 +9,7 @@ use App\Models\News;
 use App\Models\Committee;
 use App\Models\Announcement;
 use App\Models\Hall;
+use App\Models\Directory;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -20,22 +21,22 @@ class DashboardController extends Controller
             'ip_address' => $request->ip(),
             'Timestamp' => now(),
         ]);
-        
+
         // Get all counts
         $totalEvents = Event::count();
         $totalNews = News::count();
         $totalCommittees = Committee::count();
         $totalAnnouncements = Announcement::count();
         // $totalUsers = User::count(); // Uncomment when you implement users
-        
+
         // Get upcoming events (events with date >= today)
         $upcomingEvents = Event::where('date', '>=', Carbon::today())
             ->where('status', 'active') // Assuming you have a status field
             ->count();
-        
+
         // Get recent activities - combine from different models
         $recentActivities = $this->getRecentActivities();
-        
+
         return view('dashboard', compact(
             'totalEvents',
             'totalNews',
@@ -45,11 +46,11 @@ class DashboardController extends Controller
             'recentActivities'
         ));
     }
-    
+
     private function getRecentActivities($limit = 5)
     {
         $activities = collect();
-        
+
         // Recent events
         $recentEvents = Event::latest()
             ->take($limit)
@@ -64,7 +65,7 @@ class DashboardController extends Controller
                     'color' => 'primary'
                 ];
             });
-        
+
         // Recent news
         $recentNews = News::latest()
             ->take($limit)
@@ -79,7 +80,7 @@ class DashboardController extends Controller
                     'color' => 'info'
                 ];
             });
-        
+
         // Recent announcements
         $recentAnnouncements = Announcement::latest()
             ->take($limit)
@@ -94,7 +95,7 @@ class DashboardController extends Controller
                     'color' => 'warning'
                 ];
             });
-        
+
         // Recent committees
         $recentCommittees = Committee::latest()
             ->take($limit)
@@ -110,7 +111,7 @@ class DashboardController extends Controller
                 ];
             });
 
-
+        // Recent Halls of Fame
         $recentHalls = Hall::latest()
             ->take($limit)
             ->get()
@@ -124,14 +125,30 @@ class DashboardController extends Controller
                     'color' => 'secondary'
                 ];
             });
-        
+
+        // Recent Club Directories
+        $recentdirectories = Directory::latest()
+            ->take($limit)
+            ->get()
+            ->map(function ($directories) {
+                return [
+                    'type' => 'Club Directory',
+                    'title' => $directories->club_name,
+                    'description' => 'New Club Directory added: ' . $directories->club_name,
+                    'created_at' => $directories->created_at,
+                    'icon' => 'fas fa-building',
+                    'color' => 'primary'
+                ];
+            });
+
         // Combine all activities
         $activities = $activities->merge($recentEvents)
             ->merge($recentNews)
             ->merge($recentAnnouncements)
             ->merge($recentCommittees)
-            ->merge($recentHalls);
-        
+            ->merge($recentHalls)
+            ->merge($recentdirectories);
+
         // Sort by creation date (newest first) and take only specified limit
         return $activities->sortByDesc('created_at')->take($limit);
     }

@@ -5,10 +5,13 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\NewsAnnouncementController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\DirectoryController;
 
 Route::get('/hall', [HallController::class, 'apiIndex']);
 
 Route::get('/events', [EventController::class, 'apiIndex']);
+
+Route::get('/directory', [DirectoryController::class, 'apiIndex']);
 
 Route::get('/committees', [CommitteeController::class, 'apiIndex']);
 
