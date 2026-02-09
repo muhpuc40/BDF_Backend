@@ -77,7 +77,7 @@ class DashboardController extends Controller
                     'description' => 'New news published: ' . $news->title,
                     'created_at' => $news->created_at,
                     'icon' => 'fas fa-newspaper',
-                    'color' => 'info'
+                    'color' => 'success'
                 ];
             });
 
@@ -92,7 +92,7 @@ class DashboardController extends Controller
                     'description' => 'New announcement: ' . $announcement->title,
                     'created_at' => $announcement->created_at,
                     'icon' => 'fas fa-bullhorn',
-                    'color' => 'warning'
+                    'color' => 'danger'
                 ];
             });
 
@@ -121,8 +121,8 @@ class DashboardController extends Controller
                     'title' => $hall->name,
                     'description' => 'New hall of Fame added: ' . $hall->name,
                     'created_at' => $hall->created_at,
-                    'icon' => 'fas fa-building',
-                    'color' => 'secondary'
+                    'icon' => 'fas fa-trophy',
+                    'color' => 'warning'
                 ];
             });
 
@@ -136,7 +136,7 @@ class DashboardController extends Controller
                     'title' => $directories->club_name,
                     'description' => 'New Club Directory added: ' . $directories->club_name,
                     'created_at' => $directories->created_at,
-                    'icon' => 'fas fa-building',
+                    'icon' => 'fas fa-address-book',
                     'color' => 'primary'
                 ];
             });

@@ -77,7 +77,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/directory">
-                            <i class="fas fa-calendar-alt me-2"></i>View Club
+                            <i class="fas fa-address-book me-2"></i>View Club
                         </a>
                     </li>
                 </ul>
@@ -102,33 +102,45 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/hall">
-                            <i class="fas fa-users me-2"></i>View Hall of Fame
+                            <i class="fas fa-trophy me-2"></i>View Hall of Fame
                         </a>
                     </li>
                 </ul>
+                
                 <h6 class="mt-4">NEWS & ANNOUNCEMENTS</h6>
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="/news/create">
-                            <i class="fas fa-user-plus me-2"></i>Add News
+                            <i class="fas fa-plus-circle me-2"></i>Add News
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/news">
-                            <i class="fas fa-users me-2"></i>View News
+                            <i class="fas fa-newspaper me-2"></i>View News
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/announcements/create">
-                            <i class="fas fa-users me-2"></i>Add Announcement
+                            <i class="fas fa-bullhorn me-2"></i>Add Announcement
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/announcements">
-                            <i class="fas fa-users me-2"></i>View Announcements
+                            <i class="fas fa-exclamation-circle me-2"></i>View Announcements
                         </a>
                     </li>
                 </ul>
+                
+                <!-- Add this section after NEWS & ANNOUNCEMENTS -->
+                <h6 class="mt-4">EMAIL MANAGEMENT</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/emails">
+                            <i class="fas fa-inbox me-2"></i>View Contact Emails
+                        </a>
+                    </li>
+                </ul>
+                
                 <!-- Logout button at bottom in mobile menu -->
                 <div class="mt-4 pt-3 border-top">
                     <button class="btn btn-dark w-100">
@@ -163,7 +175,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/directory">
-                                <i class="fas fa-calendar-alt me-2"></i>View Club
+                                <i class="fas fa-address-book me-2"></i>View Club
                             </a>
                         </li>
                     </ul>
@@ -186,13 +198,10 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/hall">
-                                <i class="fas fa-users me-2"></i>View Hall of Fame
+                                <i class="fas fa-trophy me-2"></i>View Hall of Fame
                             </a>
                         </li>
                     </ul>
-
-
-                    <!-- Add this after COMMITTEE section in both desktop and mobile menus -->
 
                     <h5 class="mt-4">NEWS & ANNOUNCEMENTS</h5>
                     <ul class="nav flex-column">
@@ -214,6 +223,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('announcements.index') }}">
                                 <i class="fas fa-exclamation-circle me-2"></i>View Announcements
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Add this section after NEWS & ANNOUNCEMENTS -->
+                    <h5 class="mt-4">EMAIL MANAGEMENT</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/emails">
+                                <i class="fas fa-inbox me-2"></i>View Contact Emails
                             </a>
                         </li>
                     </ul>
