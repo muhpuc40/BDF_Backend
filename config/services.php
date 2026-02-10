@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'smtp2go' => [
+        'api_key' => env('SMTP2GO_API_KEY'),
+    ],
 ];

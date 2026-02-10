@@ -12,7 +12,20 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
+Route::get('/test-smtp2go', function() {
+    try {
+        Mail::raw('Test email from SMTP2GO', function ($message) {
+            $message->to('mdhassan49.muh@gmail.com')
+                    ->subject('Test Email from Laravel');
+        });
+        
+        return '✅ Test email sent! Check Laravel logs.';
+    } catch (\Exception $e) {
+        return '❌ Error: ' . $e->getMessage();
+    }
+});
 Route::get('/flush-system', function () {
 
     // 1. Disable foreign key checks
