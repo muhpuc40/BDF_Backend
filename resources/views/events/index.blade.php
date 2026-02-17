@@ -66,10 +66,6 @@
     <div class="text-center py-5">
         <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
         <h4>No Events Found</h4>
-        <p class="text-muted">Start by adding your first event.</p>
-        <a href="{{ route('events.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add Event
-        </a>
     </div>
     @endif
 

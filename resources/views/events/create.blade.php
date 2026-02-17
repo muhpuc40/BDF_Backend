@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Create Event</h1>
         <a href="{{ route('events.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back
+            <i class="fas fa-arrow-left"></i> Back to List
         </a>
     </div>
 

@@ -5,9 +5,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Create Hall Entry</h1>
+        <h1>Create Hall of Fame Entry</h1>
         <a href="{{ route('hall.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back
+            <i class="fas fa-arrow-left"></i> Back to List
         </a>
     </div>
 

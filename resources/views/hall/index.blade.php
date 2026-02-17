@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Hall</h1>
+        <h1>View Hall of Fame</h1>
         <a href="{{ route('hall.create') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Add New Entry
         </a>

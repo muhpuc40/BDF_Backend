@@ -4,7 +4,13 @@
 
 @section('content')
     <div class="container">
-        <h2>Add Committee Member</h2>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Add Committee Member</h1>
+            <a href="{{ route('committees.index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
 
         <form action="{{ route('committees.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
