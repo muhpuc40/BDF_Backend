@@ -10,6 +10,46 @@ use App\Http\Controllers\HallController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\ContactEmailController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage link created successfully!';
+});
+
+Route::get('/seed-user', function () {
+    Artisan::call('db:seed', [
+        '--class' => 'Database\\Seeders\\UserSeeder'
+    ]);
+    return 'UserSeeder executed successfully!';
+});
+
+Route::get('/flush-system', function () {
+
+    // 1. Disable foreign key checks
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+    // 2. Truncate all tables
+    $tables = DB::select('SHOW TABLES');
+    $dbName = env('DB_DATABASE');
+    $key = "Tables_in_$dbName";
+    foreach ($tables as $table) {
+        DB::table($table->$key)->truncate();
+    }
+
+    // 3. Enable foreign key checks
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+    // 4. Delete storage images (public disk)
+    Storage::disk('public')->deleteDirectory('/');
+    Storage::disk('public')->makeDirectory('/');
+
+    // 5. Clear Laravel caches
+    Artisan::call('optimize:clear');
+
+    return 'Database flushed & images cleared successfully!';
+});
 
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');
@@ -29,6 +69,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 // ── PROTECTED ROUTES (must be logged in) ─────────────────────
 Route::middleware('auth')->group(function () {
 
+
     Route::get('/', fn() => redirect()->route('dashboard'));
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -37,6 +78,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
     // Committees
     Route::get('/committees', [CommitteeController::class, 'index'])->name('committees.index');
@@ -74,6 +118,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/emails/{id}/reply', [ContactEmailController::class, 'reply'])->name('emails.reply');
 
 
-    
+
 
 });
