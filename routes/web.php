@@ -13,6 +13,57 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+Route::get('/db-backup', function () {
+
+    $db = env('DB_DATABASE');
+    $tables = DB::select('SHOW TABLES');
+    $key = "Tables_in_$db";
+
+    $sql = '';
+
+    foreach ($tables as $table) {
+
+        $name = $table->$key;
+
+        $sql .= "\n\n" .
+            DB::select("SHOW CREATE TABLE `$name`")[0]->{'Create Table'}
+            . ";\n\n";
+
+        foreach (DB::table($name)->get() as $row) {
+
+            $values = array_map(
+                fn($v) => isset($v) ? "'" . addslashes($v) . "'" : 'NULL',
+                (array) $row
+            );
+
+            $sql .= "INSERT INTO `$name` VALUES (" .
+                implode(',', $values) . ");\n";
+        }
+    }
+
+    return response($sql)
+        ->header('Content-Type', 'application/sql')
+        ->header('Content-Disposition',
+            'attachment; filename="db_backup_' .
+            now()->format('Y-m-d_H-i-s') . '.sql"');
+});
+
+Route::get('/storage-backup', function () {
+
+    $tar = storage_path('app/storage.tar');
+
+    $phar = new PharData($tar);
+    $phar->buildFromDirectory(storage_path('app/public'));
+    $phar->compress(Phar::GZ);
+
+    unlink($tar);
+
+    return response()->download(
+        $tar . '.gz',
+        'storage_backup_' . now()->format('Y-m-d_H-i-s') . '.tar.gz'
+    )->deleteFileAfterSend(true);
+});
+
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
     return 'Storage link created successfully!';

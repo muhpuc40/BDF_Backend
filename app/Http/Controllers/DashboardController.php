@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\News;
@@ -10,26 +8,18 @@ use App\Models\Committee;
 use App\Models\Announcement;
 use App\Models\Hall;
 use App\Models\Directory;
-use App\Models\User;
+use App\Models\ContactEmail;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        Log::info('Dashboard accessed', [
-            'ip_address' => $request->ip(),
-            'Timestamp' => now(),
-        ]);
-
         // Get all counts
         $totalEvents = Event::count();
         $totalNews = News::count();
         $totalCommittees = Committee::count();
         $totalAnnouncements = Announcement::count();
-        // $totalUsers = User::count(); // Uncomment when you implement users
-
-        // Get upcoming events (events with date >= today)
         $upcomingEvents = Event::where('date', '>=', Carbon::today())
             ->where('status', 'active') // Assuming you have a status field
             ->count();
@@ -141,13 +131,31 @@ class DashboardController extends Controller
                 ];
             });
 
+        // Recent Contact Emails
+        $recentEmails = ContactEmail::latest()
+            ->take($limit)
+            ->get()
+            ->map(function ($email) {
+                return [
+                    'type' => 'Contact Email',
+                    'title' => $email->subject ?? 'New Contact Message',
+                    'description' => 'New message from: ' . $email->name . ' (' . $email->email . ')',
+                    'created_at' => $email->created_at,
+                    'icon' => 'fas fa-envelope',
+                    'color' => 'info'
+                ];
+            });
+
+
         // Combine all activities
         $activities = $activities->merge($recentEvents)
             ->merge($recentNews)
             ->merge($recentAnnouncements)
             ->merge($recentCommittees)
             ->merge($recentHalls)
-            ->merge($recentdirectories);
+            ->merge($recentdirectories)
+            ->merge($recentEmails);
+
 
         // Sort by creation date (newest first) and take only specified limit
         return $activities->sortByDesc('created_at')->take($limit);
