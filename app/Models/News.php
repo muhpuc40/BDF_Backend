@@ -11,13 +11,10 @@ class News extends Model
 
     protected $fillable = [
         'title',
-        'excerpt',
         'content',
         'category',
         'date',
-        'author',
         'image',
-        'read_time',
         'tags'
     ];
 

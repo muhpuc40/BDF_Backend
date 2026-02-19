@@ -12,8 +12,9 @@
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
@@ -24,6 +25,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Icon</th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Type</th>
@@ -35,6 +37,9 @@
                         @foreach($announcements as $announcement)
                         <tr>
                             <td>{{ $announcement->id }}</td>
+                            <td>
+                                <i class="{{ $announcement->icon_class }}"></i>
+                            </td>
                             <td>{{ Str::limit($announcement->title, 30) }}</td>
                             <td>{{ Str::limit($announcement->description, 50) }}</td>
                             <td>
@@ -50,16 +55,28 @@
                             </td>
                             <td>{{ $announcement->time_ago }}</td>
                             <td>
-                                <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-sm btn-info">
+                                <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-sm btn-info" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                <a href="{{ route('announcements.edit', $announcement) }}" class="btn btn-sm btn-warning" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('announcements.destroy', $announcement) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this announcement?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            {{ $announcements->links() }}
+            <div class="d-flex justify-content-center">
+                {{ $announcements->links() }}
+            </div>
         </div>
     </div>
 </div>

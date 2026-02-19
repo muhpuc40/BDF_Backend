@@ -87,30 +87,46 @@ Route::middleware('auth')->group(function () {
     Route::get('/committees/create', [CommitteeController::class, 'create'])->name('committees.create');
     Route::post('/committees', [CommitteeController::class, 'store'])->name('committees.store');
     Route::get('/committees/{committee}', [CommitteeController::class, 'show'])->name('committees.show');
+    Route::get('/committees/{committee}/edit', [CommitteeController::class, 'edit'])->name('committees.edit');
+    Route::put('/committees/{committee}', [CommitteeController::class, 'update'])->name('committees.update');
+    Route::delete('/committees/{committee}', [CommitteeController::class, 'destroy'])->name('committees.destroy');
 
     // News
     Route::get('/news', [NewsAnnouncementController::class, 'newsIndex'])->name('news.index');
     Route::get('/news/create', [NewsAnnouncementController::class, 'newsCreate'])->name('news.create');
     Route::post('/news', [NewsAnnouncementController::class, 'newsStore'])->name('news.store');
     Route::get('/news/{news}', [NewsAnnouncementController::class, 'newsShow'])->name('news.show');
+    Route::get('/news/{news}/edit', [NewsAnnouncementController::class, 'newsEdit'])->name('news.edit');
+    Route::put('/news/{news}', [NewsAnnouncementController::class, 'newsUpdate'])->name('news.update');
+    Route::delete('/news/{news}', [NewsAnnouncementController::class, 'newsDestroy'])->name('news.destroy');
 
     // Announcements
     Route::get('/announcements', [NewsAnnouncementController::class, 'announcementIndex'])->name('announcements.index');
     Route::get('/announcements/create', [NewsAnnouncementController::class, 'announcementCreate'])->name('announcements.create');
     Route::post('/announcements', [NewsAnnouncementController::class, 'announcementStore'])->name('announcements.store');
     Route::get('/announcements/{announcement}', [NewsAnnouncementController::class, 'announcementShow'])->name('announcements.show');
-
+    Route::get('/announcements/{announcement}/edit', [NewsAnnouncementController::class, 'announcementEdit'])->name('announcements.edit');
+    Route::put('/announcements/{announcement}', [NewsAnnouncementController::class, 'announcementUpdate'])->name('announcements.update');
+    Route::delete('/announcements/{announcement}', [NewsAnnouncementController::class, 'announcementDestroy'])->name('announcements.destroy');
+    
     // Hall
     Route::get('/hall', [HallController::class, 'index'])->name('hall.index');
     Route::get('/hall/create', [HallController::class, 'create'])->name('hall.create');
     Route::post('/hall', [HallController::class, 'store'])->name('hall.store');
     Route::get('/hall/{hall}', [HallController::class, 'show'])->name('hall.show');
+    Route::get('/hall/{hall}/edit', [HallController::class, 'edit'])->name('hall.edit');
+    Route::put('/hall/{hall}', [HallController::class, 'update'])->name('hall.update');
+    Route::delete('/hall/{hall}', [HallController::class, 'destroy'])->name('hall.destroy');
 
     // Directory
     Route::get('/directory', [DirectoryController::class, 'index'])->name('directory.index');
     Route::get('/directory/create', [DirectoryController::class, 'create'])->name('directory.create');
     Route::post('/directory', [DirectoryController::class, 'store'])->name('directory.store');
     Route::get('/directory/{directory}', [DirectoryController::class, 'show'])->name('directory.show');
+    Route::get('/directory/{directory}/edit', [DirectoryController::class, 'edit'])->name('directory.edit');
+    Route::put('/directory/{directory}', [DirectoryController::class, 'update'])->name('directory.update');
+    Route::patch('/directory/{directory}/status', [DirectoryController::class, 'updateStatus'])->name('directory.update-status');
+    Route::delete('/directory/{directory}', [DirectoryController::class, 'destroy'])->name('directory.destroy');
 
     // Emails
     Route::get('/emails', [ContactEmailController::class, 'index'])->name('emails.index');

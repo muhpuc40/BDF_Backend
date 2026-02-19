@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CommitteeController extends Controller
 {
@@ -23,13 +24,13 @@ class CommitteeController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'designation' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'fb_link' => 'nullable|url',
-            'gmail' => 'nullable|email',
+            'gmail' => 'required|email',
             'linkedin_link' => 'nullable|url',
-            'priority_level' => 'nullable|integer'
+            'priority_level' => 'required|integer|min:0'
         ]);
-
+        
         $data = $request->all();
 
         if ($request->hasFile('image')) {
@@ -45,6 +46,61 @@ class CommitteeController extends Controller
     public function show(Committee $committee)
     {
         return view('committee.show', compact('committee'));
+    }
+
+    /**
+     * Show the form for editing the specified committee member.
+     */
+    public function edit(Committee $committee)
+    {
+        return view('committee.edit', compact('committee'));
+    }
+
+    /**
+     * Update the specified committee member in storage.
+     */
+    public function update(Request $request, Committee $committee)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'fb_link' => 'nullable|url',
+            'gmail' => 'required|email',
+            'linkedin_link' => 'nullable|url',
+            'priority_level' => 'required|integer|min:0'
+        ]);
+        
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($committee->image) {
+                Storage::disk('public')->delete($committee->image);
+            }
+            
+            $imagePath = $request->file('image')->store('committees', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $committee->update($data);
+
+        return redirect()->route('committees.index')->with('success', 'Committee member updated successfully!');
+    }
+
+    /**
+     * Remove the specified committee member from storage.
+     */
+    public function destroy(Committee $committee)
+    {
+        // Delete the image file
+        if ($committee->image) {
+            Storage::disk('public')->delete($committee->image);
+        }
+        
+        $committee->delete();
+
+        return redirect()->route('committees.index')->with('success', 'Committee member deleted successfully!');
     }
 
     // API Method

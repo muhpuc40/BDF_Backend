@@ -12,11 +12,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('designation');
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->string('fb_link')->nullable();
-            $table->string('gmail')->nullable();
+            $table->string('gmail');
             $table->string('linkedin_link')->nullable();
-            $table->integer('priority_level')->default(0);
+            $table->integer('priority_level');
             $table->timestamps();
         });
     }
