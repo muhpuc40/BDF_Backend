@@ -118,7 +118,7 @@ class EventController extends Controller
                     'id' => $item->id,
                     'title' => $item->title,
                     'description' => $item->description,
-                    'date' => $item->date,
+                    'date' => $item->date ? $item->date->format('M d, Y') : null,
                     'time' => $item->time,
                     'location' => $item->location,
                     'type' => $item->type,

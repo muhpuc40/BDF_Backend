@@ -9,6 +9,8 @@ use App\Models\Announcement;
 use App\Models\Hall;
 use App\Models\Directory;
 use App\Models\ContactEmail;
+use App\Models\Presidium;
+use App\Models\Advisor;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -131,6 +133,36 @@ class DashboardController extends Controller
                 ];
             });
 
+        // Recent Presidium Members
+        $recentPresidium = Presidium::latest()
+            ->take($limit)
+            ->get()
+            ->map(function ($presidium) {
+                return [
+                    'type' => 'Presidium',
+                    'title' => $presidium->name,
+                    'description' => 'New Presidium member added: ' . $presidium->name,
+                    'created_at' => $presidium->created_at,
+                    'icon' => 'fas fa-user-tie',
+                    'color' => 'info'
+                ];
+            });
+
+        // Recent Advisors
+        $recentAdvisors = Advisor::latest()
+            ->take($limit)
+            ->get()
+            ->map(function ($advisor) {
+                return [
+                    'type' => 'Advisor',
+                    'title' => $advisor->name,
+                    'description' => 'New Advisor added: ' . $advisor->name,
+                    'created_at' => $advisor->created_at,
+                    'icon' => 'fas fa-chalkboard-teacher',
+                    'color' => 'secondary'
+                ];
+            });
+
         // Recent Contact Emails
         $recentEmails = ContactEmail::latest()
             ->take($limit)
@@ -154,7 +186,9 @@ class DashboardController extends Controller
             ->merge($recentCommittees)
             ->merge($recentHalls)
             ->merge($recentdirectories)
+            ->merge($recentAdvisors)
             ->merge($recentEmails);
+
 
 
         // Sort by creation date (newest first) and take only specified limit

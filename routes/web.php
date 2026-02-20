@@ -9,6 +9,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\ContactEmailController;
+use App\Http\Controllers\AdvisorController;
+use App\Http\Controllers\PresidiumController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -43,9 +45,11 @@ Route::get('/db-backup', function () {
 
     return response($sql)
         ->header('Content-Type', 'application/sql')
-        ->header('Content-Disposition',
+        ->header(
+            'Content-Disposition',
             'attachment; filename="db_backup_' .
-            now()->format('Y-m-d_H-i-s') . '.sql"');
+            now()->format('Y-m-d_H-i-s') . '.sql"'
+        );
 });
 
 Route::get('/storage-backup', function () {
@@ -159,7 +163,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/announcements/{announcement}/edit', [NewsAnnouncementController::class, 'announcementEdit'])->name('announcements.edit');
     Route::put('/announcements/{announcement}', [NewsAnnouncementController::class, 'announcementUpdate'])->name('announcements.update');
     Route::delete('/announcements/{announcement}', [NewsAnnouncementController::class, 'announcementDestroy'])->name('announcements.destroy');
-    
+
     // Hall
     Route::get('/hall', [HallController::class, 'index'])->name('hall.index');
     Route::get('/hall/create', [HallController::class, 'create'])->name('hall.create');
@@ -178,6 +182,24 @@ Route::middleware('auth')->group(function () {
     Route::put('/directory/{directory}', [DirectoryController::class, 'update'])->name('directory.update');
     Route::patch('/directory/{directory}/status', [DirectoryController::class, 'updateStatus'])->name('directory.update-status');
     Route::delete('/directory/{directory}', [DirectoryController::class, 'destroy'])->name('directory.destroy');
+
+    // Advisors
+    Route::get('/advisors', [AdvisorController::class, 'index'])->name('advisors.index');
+    Route::get('/advisors/create', [AdvisorController::class, 'create'])->name('advisors.create');
+    Route::post('/advisors', [AdvisorController::class, 'store'])->name('advisors.store');
+    Route::get('/advisors/{advisor}', [AdvisorController::class, 'show'])->name('advisors.show');
+    Route::get('/advisors/{advisor}/edit', [AdvisorController::class, 'edit'])->name('advisors.edit');
+    Route::put('/advisors/{advisor}', [AdvisorController::class, 'update'])->name('advisors.update');
+    Route::delete('/advisors/{advisor}', [AdvisorController::class, 'destroy'])->name('advisors.destroy');
+
+    // Presidium
+    Route::get('/presidium', [PresidiumController::class, 'index'])->name('presidium.index');
+    Route::get('/presidium/create', [PresidiumController::class, 'create'])->name('presidium.create');
+    Route::post('/presidium', [PresidiumController::class, 'store'])->name('presidium.store');
+    Route::get('/presidium/{presidium}', [PresidiumController::class, 'show'])->name('presidium.show');
+    Route::get('/presidium/{presidium}/edit', [PresidiumController::class, 'edit'])->name('presidium.edit');
+    Route::put('/presidium/{presidium}', [PresidiumController::class, 'update'])->name('presidium.update');
+    Route::delete('/presidium/{presidium}', [PresidiumController::class, 'destroy'])->name('presidium.destroy');
 
     // Emails
     Route::get('/emails', [ContactEmailController::class, 'index'])->name('emails.index');

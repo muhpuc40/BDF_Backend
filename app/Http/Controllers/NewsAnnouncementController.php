@@ -185,7 +185,7 @@ class NewsAnnouncementController extends Controller
                     'title' => $item->title,
                     'content' => $item->content,
                     'category' => $item->category,
-                    'date' => $item->date,
+                    'date' => $item->date ? $item->date->format('M d, Y') : null,
                     'image' => $item->image ? asset('storage/' . $item->image) : null,
                     'tags' => $item->tags,
                     'created_at' => $item->created_at,

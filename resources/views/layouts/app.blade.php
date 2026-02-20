@@ -25,9 +25,18 @@
             scrollbar-color: #dee2e6 transparent;
         }
 
-        .sidebar::-webkit-scrollbar { width: 4px; }
-        .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: #dee2e6; border-radius: 4px; }
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 4px;
+        }
 
         /* ── Section headers (collapsible) ── */
         .sidebar-section-header {
@@ -47,9 +56,14 @@
             margin-bottom: 0.15rem;
         }
 
-        .sidebar-section-header:first-child { margin-top: 0.25rem; }
+        .sidebar-section-header:first-child {
+            margin-top: 0.25rem;
+        }
 
-        .sidebar-section-header:hover { background: #e9ecef; color: #343a40; }
+        .sidebar-section-header:hover {
+            background: #e9ecef;
+            color: #343a40;
+        }
 
         .sidebar-section-header .chevron {
             font-size: 0.6rem;
@@ -57,7 +71,9 @@
             color: #adb5bd;
         }
 
-        .sidebar-section-header.collapsed .chevron { transform: rotate(-90deg); }
+        .sidebar-section-header.collapsed .chevron {
+            transform: rotate(-90deg);
+        }
 
         /* ── Nav links ── */
         .sidebar-nav .nav-link {
@@ -87,7 +103,9 @@
             transition: color 0.15s;
         }
 
-        .sidebar-nav .nav-link:hover .nav-icon { color: #343a40; }
+        .sidebar-nav .nav-link:hover .nav-icon {
+            color: #343a40;
+        }
 
         /* ── Section collapse animation ── */
         .sidebar-section-body {
@@ -101,11 +119,16 @@
             max-height: 0;
             opacity: 0;
         }
+
         /* ── Offcanvas ── */
-        .offcanvas-start { width: 280px; }
+        .offcanvas-start {
+            width: 280px;
+        }
 
         /* ── Navbar ── */
-        .logout-form { display: inline; }
+        .logout-form {
+            display: inline;
+        }
     </style>
 </head>
 
@@ -143,10 +166,14 @@
                 </div>
                 <div class="sidebar-section-body">
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/events/create"><i class="nav-icon fas fa-plus-circle"></i>Add Event</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/events"><i class="nav-icon fas fa-calendar-alt"></i>View Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/directory/create"><i class="nav-icon fas fa-plus-circle"></i>Add Club</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/directory"><i class="nav-icon fas fa-address-book"></i>View Clubs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/events/create"><i
+                                    class="nav-icon fas fa-plus-circle"></i>Add Event</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/events"><i
+                                    class="nav-icon fas fa-calendar-alt"></i>View Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/directory/create"><i
+                                    class="nav-icon fas fa-plus-circle"></i>Add Club</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/directory"><i
+                                    class="nav-icon fas fa-address-book"></i>View Clubs</a></li>
                     </ul>
                 </div>
 
@@ -155,10 +182,14 @@
                 </div>
                 <div class="sidebar-section-body">
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/committees/create"><i class="nav-icon fas fa-user-plus"></i>Add Member</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/committees"><i class="nav-icon fas fa-users"></i>View Committee</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/hall/create"><i class="nav-icon fas fa-user-plus"></i>Add Hall of Fame</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/hall"><i class="nav-icon fas fa-trophy"></i>View Hall of Fame</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/committees/create"><i
+                                    class="nav-icon fas fa-user-plus"></i>Add Member</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/committees"><i
+                                    class="nav-icon fas fa-users"></i>View Committee</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/hall/create"><i
+                                    class="nav-icon fas fa-user-plus"></i>Add Hall of Fame</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/hall"><i class="nav-icon fas fa-trophy"></i>View
+                                Hall of Fame</a></li>
                     </ul>
                 </div>
 
@@ -167,31 +198,59 @@
                 </div>
                 <div class="sidebar-section-body">
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/news/create"><i class="nav-icon fas fa-plus-circle"></i>Add News</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/news"><i class="nav-icon fas fa-newspaper"></i>View News</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/news/create"><i
+                                    class="nav-icon fas fa-plus-circle"></i>Add News</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/news"><i
+                                    class="nav-icon fas fa-newspaper"></i>View News</a></li>
                     </ul>
                 </div>
 
-                
+
 
                 <div class="sidebar-section-header" onclick="toggleSection(this)">
                     <span>ANNOUNCEMENTS</span><i class="fas fa-chevron-down chevron"></i>
                 </div>
                 <div class="sidebar-section-body">
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/announcements/create"><i class="nav-icon fas fa-bullhorn"></i>Add Announcement</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/announcements"><i class="nav-icon fas fa-exclamation-circle"></i>View Announcements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/announcements/create"><i
+                                    class="nav-icon fas fa-bullhorn"></i>Add Announcement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/announcements"><i
+                                    class="nav-icon fas fa-exclamation-circle"></i>View Announcements</a></li>
                     </ul>
                 </div>
 
-                
-
                 <div class="sidebar-section-header" onclick="toggleSection(this)">
-                    <span>EMAIL MANAGEMENT</span><i class="fas fa-chevron-down chevron"></i>
+                    <span>ADVISORS Panel</span><i class="fas fa-chevron-down chevron"></i>
                 </div>
                 <div class="sidebar-section-body">
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/emails"><i class="nav-icon fas fa-inbox"></i>View Contact Emails</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/advisors/create"><i
+                                    class="nav-icon fas fa-user-plus"></i>Add Advisor</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/advisors"><i
+                                    class="nav-icon fas fa-users"></i>View Advisors</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="sidebar-section-header" onclick="toggleSection(this)">
+                    <span>PRESIDIUM Member</span><i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="sidebar-section-body">
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="/presidium/create"><i
+                                    class="nav-icon fas fa-user-plus"></i>Add Presidium Member</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/presidium"><i
+                                    class="nav-icon fas fa-users"></i>View Presidium Members</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section-header" onclick="toggleSection(this)">
+                    <span>EMAIL</span><i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="sidebar-section-body">
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="/emails"><i
+                                    class="nav-icon fas fa-inbox"></i>View Contact Emails</a></li>
                     </ul>
                 </div>
 
@@ -219,59 +278,95 @@
                     </div>
                     <div class="sidebar-section-body">
                         <ul class="nav flex-column sidebar-nav">
-                            <li class="nav-item"><a class="nav-link" href="/events/create"><i class="nav-icon fas fa-plus-circle"></i>Add Event</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/events"><i class="nav-icon fas fa-calendar-alt"></i>View Events</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/directory/create"><i class="nav-icon fas fa-plus-circle"></i>Add Club</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/directory"><i class="nav-icon fas fa-address-book"></i>View Clubs</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/events/create"><i
+                                        class="nav-icon fas fa-plus-circle"></i>Add Event</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/events"><i
+                                        class="nav-icon fas fa-calendar-alt"></i>View Events</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/directory/create"><i
+                                        class="nav-icon fas fa-plus-circle"></i>Add Club</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/directory"><i
+                                        class="nav-icon fas fa-address-book"></i>View Clubs</a></li>
                         </ul>
                     </div>
 
-                    
+
 
                     <div class="sidebar-section-header" onclick="toggleSection(this)">
                         <span>COMMITTEE</span><i class="fas fa-chevron-down chevron"></i>
                     </div>
                     <div class="sidebar-section-body">
                         <ul class="nav flex-column sidebar-nav">
-                            <li class="nav-item"><a class="nav-link" href="/committees/create"><i class="nav-icon fas fa-user-plus"></i>Add Member</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/committees"><i class="nav-icon fas fa-users"></i>View Committee</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/hall/create"><i class="nav-icon fas fa-user-plus"></i>Add Hall of Fame</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/hall"><i class="nav-icon fas fa-trophy"></i>View Hall of Fame</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/committees/create"><i
+                                        class="nav-icon fas fa-user-plus"></i>Add Member</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/committees"><i
+                                        class="nav-icon fas fa-users"></i>View Committee</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/hall/create"><i
+                                        class="nav-icon fas fa-user-plus"></i>Add Hall of Fame</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/hall"><i
+                                        class="nav-icon fas fa-trophy"></i>View Hall of Fame</a></li>
                         </ul>
                     </div>
 
-                    
+
 
                     <div class="sidebar-section-header" onclick="toggleSection(this)">
                         <span>NEWS</span><i class="fas fa-chevron-down chevron"></i>
                     </div>
                     <div class="sidebar-section-body">
                         <ul class="nav flex-column sidebar-nav">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('news.create') }}"><i class="nav-icon fas fa-plus-circle"></i>Add News</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('news.index') }}"><i class="nav-icon fas fa-newspaper"></i>View News</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('news.create') }}"><i
+                                        class="nav-icon fas fa-plus-circle"></i>Add News</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('news.index') }}"><i
+                                        class="nav-icon fas fa-newspaper"></i>View News</a></li>
                         </ul>
                     </div>
 
-                    
+
 
                     <div class="sidebar-section-header" onclick="toggleSection(this)">
                         <span>ANNOUNCEMENTS</span><i class="fas fa-chevron-down chevron"></i>
                     </div>
                     <div class="sidebar-section-body">
                         <ul class="nav flex-column sidebar-nav">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('announcements.create') }}"><i class="nav-icon fas fa-bullhorn"></i>Add Announcement</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('announcements.index') }}"><i class="nav-icon fas fa-exclamation-circle"></i>View Announcements</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('announcements.create') }}"><i
+                                        class="nav-icon fas fa-bullhorn"></i>Add Announcement</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('announcements.index') }}"><i
+                                        class="nav-icon fas fa-exclamation-circle"></i>View Announcements</a></li>
                         </ul>
                     </div>
 
-                    
-
                     <div class="sidebar-section-header" onclick="toggleSection(this)">
-                        <span>EMAIL MANAGEMENT</span><i class="fas fa-chevron-down chevron"></i>
+                        <span>ADVISORS Panel</span><i class="fas fa-chevron-down chevron"></i>
                     </div>
                     <div class="sidebar-section-body">
                         <ul class="nav flex-column sidebar-nav">
-                            <li class="nav-item"><a class="nav-link" href="/emails"><i class="nav-icon fas fa-inbox"></i>View Contact Emails</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/advisors/create"><i
+                                        class="nav-icon fas fa-user-plus"></i>Add Advisor</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/advisors"><i
+                                        class="nav-icon fas fa-users"></i>View Advisors</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section-header" onclick="toggleSection(this)">
+                        <span>PRESIDIUM Member</span><i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="sidebar-section-body">
+                        <ul class="nav flex-column sidebar-nav">
+                            <li class="nav-item"><a class="nav-link" href="/presidium/create"><i
+                                        class="nav-icon fas fa-user-plus"></i>Add Presidium Member</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/presidium"><i
+                                        class="nav-icon fas fa-users"></i>View Presidium Members</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="sidebar-section-header" onclick="toggleSection(this)">
+                        <span>EMAIL</span><i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="sidebar-section-body">
+                        <ul class="nav flex-column sidebar-nav">
+                            <li class="nav-item"><a class="nav-link" href="/emails"><i
+                                        class="nav-icon fas fa-inbox"></i>View Contact Emails</a></li>
                         </ul>
                     </div>
 

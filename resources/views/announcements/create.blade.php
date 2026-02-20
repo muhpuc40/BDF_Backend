@@ -29,8 +29,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="time_ago" class="form-label">Time Ago *</label>
-                            <input type="text" class="form-control" id="time_ago" name="time_ago" placeholder="2 hours ago, 1 day ago, Just now" required>
+                            <label for="time_ago" class="form-label">Date *</label>
+                            <input type="text" class="form-control" id="time_ago" name="time_ago" placeholder="e.g., 01-01-2026" required>
                         </div>
                     </div>
 

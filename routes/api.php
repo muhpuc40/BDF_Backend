@@ -7,6 +7,8 @@ use App\Http\Controllers\NewsAnnouncementController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\ContactEmailController;
+use App\Http\Controllers\AdvisorController;
+use App\Http\Controllers\PresidiumController;
 
 Route::get('/hall', [HallController::class, 'apiIndex']);
 
@@ -21,6 +23,10 @@ Route::get('/news', [NewsAnnouncementController::class, 'apiNews']);
 Route::post('/contact', [ContactEmailController::class, 'store']);
 
 Route::get('/announcements', [NewsAnnouncementController::class, 'apiAnnouncements']);
+
+Route::get('/advisors', [AdvisorController::class, 'apiIndex']);
+
+Route::get('/presidium', [PresidiumController::class, 'apiIndex']);
 
 Route::get('/', function () {
     return response()->json([
