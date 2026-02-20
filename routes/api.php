@@ -9,6 +9,9 @@ use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\ContactEmailController;
 use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\PresidiumController;
+use App\Http\Controllers\Api\UserController;
+
+Route::post('/register', [UserController::class, 'register']);
 
 Route::get('/hall', [HallController::class, 'apiIndex']);
 

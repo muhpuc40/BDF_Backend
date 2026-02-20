@@ -187,9 +187,8 @@ class DashboardController extends Controller
             ->merge($recentHalls)
             ->merge($recentdirectories)
             ->merge($recentAdvisors)
+            ->merge($recentPresidium)
             ->merge($recentEmails);
-
-
 
         // Sort by creation date (newest first) and take only specified limit
         return $activities->sortByDesc('created_at')->take($limit);

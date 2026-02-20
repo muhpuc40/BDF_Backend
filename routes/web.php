@@ -11,105 +11,11 @@ use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\ContactEmailController;
 use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\PresidiumController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/db-backup', function () {
-
-    $db = env('DB_DATABASE');
-    $tables = DB::select('SHOW TABLES');
-    $key = "Tables_in_$db";
-
-    $sql = '';
-
-    foreach ($tables as $table) {
-
-        $name = $table->$key;
-
-        $sql .= "\n\n" .
-            DB::select("SHOW CREATE TABLE `$name`")[0]->{'Create Table'}
-            . ";\n\n";
-
-        foreach (DB::table($name)->get() as $row) {
-
-            $values = array_map(
-                fn($v) => isset($v) ? "'" . addslashes($v) . "'" : 'NULL',
-                (array) $row
-            );
-
-            $sql .= "INSERT INTO `$name` VALUES (" .
-                implode(',', $values) . ");\n";
-        }
-    }
-
-    return response($sql)
-        ->header('Content-Type', 'application/sql')
-        ->header(
-            'Content-Disposition',
-            'attachment; filename="db_backup_' .
-            now()->format('Y-m-d_H-i-s') . '.sql"'
-        );
-});
-
-Route::get('/storage-backup', function () {
-
-    $tar = storage_path('app/storage.tar');
-
-    $phar = new PharData($tar);
-    $phar->buildFromDirectory(storage_path('app/public'));
-    $phar->compress(Phar::GZ);
-
-    unlink($tar);
-
-    return response()->download(
-        $tar . '.gz',
-        'storage_backup_' . now()->format('Y-m-d_H-i-s') . '.tar.gz'
-    )->deleteFileAfterSend(true);
-});
-
-Route::get('/storage-link', function () {
-    Artisan::call('storage:link');
-    return 'Storage link created successfully!';
-});
-
-Route::get('/seed-user', function () {
-    Artisan::call('db:seed', [
-        '--class' => 'Database\\Seeders\\UserSeeder'
-    ]);
-    return 'UserSeeder executed successfully!';
-});
-
-Route::get('/flush-system', function () {
-
-    // 1. Disable foreign key checks
-    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-    // 2. Truncate all tables
-    $tables = DB::select('SHOW TABLES');
-    $dbName = env('DB_DATABASE');
-    $key = "Tables_in_$dbName";
-    foreach ($tables as $table) {
-        DB::table($table->$key)->truncate();
-    }
-
-    // 3. Enable foreign key checks
-    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-    // 4. Delete storage images (public disk)
-    Storage::disk('public')->deleteDirectory('/');
-    Storage::disk('public')->makeDirectory('/');
-
-    // 5. Clear Laravel caches
-    Artisan::call('optimize:clear');
-
-    return 'Database flushed & images cleared successfully!';
-});
-
-Route::get('/clear-cache', function () {
-    Artisan::call('optimize:clear');
-    return 'Cache Cleared!';
-});
 
 // ── AUTH ROUTES (guests only) ─────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -121,9 +27,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-// ── PROTECTED ROUTES (must be logged in) ─────────────────────
-Route::middleware('auth')->group(function () {
-
+// ── PROTECTED ROUTES (must be logged in + admin) ──────────────
+Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/', fn() => redirect()->route('dashboard'));
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -206,7 +111,75 @@ Route::middleware('auth')->group(function () {
     Route::get('/emails/{id}', [ContactEmailController::class, 'show'])->name('emails.show');
     Route::post('/emails/{id}/reply', [ContactEmailController::class, 'reply'])->name('emails.reply');
 
+    // Users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::put('/users/{id}/status', [UserController::class, 'updateStatus'])->name('users.update-status');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
 
 
 
 });
+
+
+
+
+Route::get('/db-backup', function () {
+        $db = env('DB_DATABASE');
+        $tables = DB::select('SHOW TABLES');
+        $key = "Tables_in_$db";
+        $sql = '';
+        foreach ($tables as $table) {
+            $name = $table->$key;
+            $sql .= "\n\n" . DB::select("SHOW CREATE TABLE `$name`")[0]->{'Create Table'} . ";\n\n";
+            foreach (DB::table($name)->get() as $row) {
+                $values = array_map(
+                    fn($v) => isset($v) ? "'" . addslashes($v) . "'" : 'NULL',
+                    (array) $row
+                );
+                $sql .= "INSERT INTO `$name` VALUES (" . implode(',', $values) . ");\n";
+            }
+        }
+        return response($sql)
+            ->header('Content-Type', 'application/sql')
+            ->header('Content-Disposition', 'attachment; filename="db_backup_' . now()->format('Y-m-d_H-i-s') . '.sql"');
+    });
+
+    Route::get('/storage-backup', function () {
+        $tar = storage_path('app/storage.tar');
+        $phar = new PharData($tar);
+        $phar->buildFromDirectory(storage_path('app/public'));
+        $phar->compress(Phar::GZ);
+        unlink($tar);
+        return response()->download($tar . '.gz', 'storage_backup_' . now()->format('Y-m-d_H-i-s') . '.tar.gz')->deleteFileAfterSend(true);
+    });
+
+    Route::get('/storage-link', function () {
+        Artisan::call('storage:link');
+        return 'Storage link created successfully!';
+    });
+
+    Route::get('/seed-user', function () {
+        Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\UserSeeder']);
+        return 'UserSeeder executed successfully!';
+    });
+
+    Route::get('/flush-system', function () {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $tables = DB::select('SHOW TABLES');
+        $dbName = env('DB_DATABASE');
+        $key = "Tables_in_$dbName";
+        foreach ($tables as $table) {
+            DB::table($table->$key)->truncate();
+        }
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Storage::disk('public')->deleteDirectory('/');
+        Storage::disk('public')->makeDirectory('/');
+        Artisan::call('optimize:clear');
+        return 'Database flushed & images cleared successfully!';
+    });
+
+    Route::get('/clear-cache', function () {
+        Artisan::call('optimize:clear');
+        return 'Cache Cleared!';
+    });

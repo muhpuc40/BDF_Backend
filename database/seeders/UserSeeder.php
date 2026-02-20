@@ -12,17 +12,23 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Admin User',
+            'full_name' => 'Admin User',
             'email' => 'admin@bdfbd.org',
+            'phone' => '1234567890',
+            'institution' => 'BDF Admin University',
             'password' => Hash::make('asdf1234##'),
-            'email_verified_at' => now(),
+            'status' => 'active',
+            'role' => 'admin',
         ]);
 
         User::create([
-            'name' => 'Minhaj Uddin Hassan',
+            'full_name' => 'Minhaj Uddin Hassan',
             'email' => 'mdhassan49.muh@gmail.com',
+            'phone' => '0987654321',
+            'institution' => 'Tech Institute',
             'password' => Hash::make('11111111'),
-            'email_verified_at' => now(),
+            'status' => 'active',
+            'role' => 'admin',
         ]);
     }
 }

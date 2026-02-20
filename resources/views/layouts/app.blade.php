@@ -245,6 +245,17 @@
                 </div>
 
                 <div class="sidebar-section-header" onclick="toggleSection(this)">
+                    <span>New Member</span><i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="sidebar-section-body">
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="/users"><i
+                                    class="nav-icon fas fa-user-plus"></i>View New Member</a></li>
+                    </ul>
+
+                </div>
+
+                <div class="sidebar-section-header" onclick="toggleSection(this)">
                     <span>EMAIL</span><i class="fas fa-chevron-down chevron"></i>
                 </div>
                 <div class="sidebar-section-body">
@@ -358,6 +369,19 @@
                                         class="nav-icon fas fa-users"></i>View Presidium Members</a></li>
                         </ul>
                     </div>
+
+                    <div class="sidebar-section-header" onclick="toggleSection(this)">
+                        <span>New Member</span><i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="sidebar-section-body">
+                        <ul class="nav flex-column sidebar-nav">
+                            <li class="nav-item"><a class="nav-link" href="/users"><i
+                                        class="nav-icon fas fa-user-plus"></i>View New Member</a></li>
+                        </ul>
+                    </div>
+
+
+
 
 
                     <div class="sidebar-section-header" onclick="toggleSection(this)">
