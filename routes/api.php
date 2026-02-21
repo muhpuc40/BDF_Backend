@@ -10,6 +10,27 @@ use App\Http\Controllers\ContactEmailController;
 use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\PresidiumController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BlogController;
+
+// ── Auth ──────────────────────────────────────────
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+
+// Protected
+Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [AuthController::class, 'me']);
+
+    Route::middleware('auth:api')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/me', [AuthController::class, 'me']);
+        Route::post('/blogs', [BlogController::class, 'store']);
+        Route::get('/blogs/my', [BlogController::class, 'myBlogs']);
+        Route::put('/blogs/{id}', [BlogController::class, 'update']);
+        Route::delete('/blogs/{id}', [BlogController::class, 'destroy']);
+    });
+});
 
 Route::post('/register', [UserController::class, 'register']);
 

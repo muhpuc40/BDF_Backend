@@ -9,8 +9,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\ContactEmailController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\PresidiumController;
+
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -119,67 +121,77 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 
+
+    // Blog Admin routes
+    Route::prefix('blog')->name('blog.')->middleware(['auth'])->group(function () {
+        Route::get('/', [BlogController::class, 'index'])->name('index');
+        Route::get('/{id}/edit', [BlogController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [BlogController::class, 'update'])->name('update');
+        Route::post('/{id}/accept', [BlogController::class, 'accept'])->name('accept');
+        Route::post('/{id}/hide', [BlogController::class, 'hide'])->name('hide');
+        Route::delete('/{id}', [BlogController::class, 'destroy'])->name('destroy');
+    });
 });
 
 
 
 
 Route::get('/db-backup', function () {
-        $db = env('DB_DATABASE');
-        $tables = DB::select('SHOW TABLES');
-        $key = "Tables_in_$db";
-        $sql = '';
-        foreach ($tables as $table) {
-            $name = $table->$key;
-            $sql .= "\n\n" . DB::select("SHOW CREATE TABLE `$name`")[0]->{'Create Table'} . ";\n\n";
-            foreach (DB::table($name)->get() as $row) {
-                $values = array_map(
-                    fn($v) => isset($v) ? "'" . addslashes($v) . "'" : 'NULL',
-                    (array) $row
-                );
-                $sql .= "INSERT INTO `$name` VALUES (" . implode(',', $values) . ");\n";
-            }
+    $db = env('DB_DATABASE');
+    $tables = DB::select('SHOW TABLES');
+    $key = "Tables_in_$db";
+    $sql = '';
+    foreach ($tables as $table) {
+        $name = $table->$key;
+        $sql .= "\n\n" . DB::select("SHOW CREATE TABLE `$name`")[0]->{'Create Table'} . ";\n\n";
+        foreach (DB::table($name)->get() as $row) {
+            $values = array_map(
+                fn($v) => isset($v) ? "'" . addslashes($v) . "'" : 'NULL',
+                (array) $row
+            );
+            $sql .= "INSERT INTO `$name` VALUES (" . implode(',', $values) . ");\n";
         }
-        return response($sql)
-            ->header('Content-Type', 'application/sql')
-            ->header('Content-Disposition', 'attachment; filename="db_backup_' . now()->format('Y-m-d_H-i-s') . '.sql"');
-    });
+    }
+    return response($sql)
+        ->header('Content-Type', 'application/sql')
+        ->header('Content-Disposition', 'attachment; filename="db_backup_' . now()->format('Y-m-d_H-i-s') . '.sql"');
+});
 
-    Route::get('/storage-backup', function () {
-        $tar = storage_path('app/storage.tar');
-        $phar = new PharData($tar);
-        $phar->buildFromDirectory(storage_path('app/public'));
-        $phar->compress(Phar::GZ);
-        unlink($tar);
-        return response()->download($tar . '.gz', 'storage_backup_' . now()->format('Y-m-d_H-i-s') . '.tar.gz')->deleteFileAfterSend(true);
-    });
+Route::get('/storage-backup', function () {
+    $tar = storage_path('app/storage.tar');
+    $phar = new PharData($tar);
+    $phar->buildFromDirectory(storage_path('app/public'));
+    $phar->compress(Phar::GZ);
+    unlink($tar);
+    return response()->download($tar . '.gz', 'storage_backup_' . now()->format('Y-m-d_H-i-s') . '.tar.gz')->deleteFileAfterSend(true);
+});
 
-    Route::get('/storage-link', function () {
-        Artisan::call('storage:link');
-        return 'Storage link created successfully!';
-    });
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage link created successfully!';
+});
 
-    Route::get('/seed-user', function () {
-        Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\UserSeeder']);
-        return 'UserSeeder executed successfully!';
-    });
+Route::get('/seed-user', function () {
+    Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\UserSeeder']);
+    return 'UserSeeder executed successfully!';
+});
 
-    Route::get('/flush-system', function () {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $tables = DB::select('SHOW TABLES');
-        $dbName = env('DB_DATABASE');
-        $key = "Tables_in_$dbName";
-        foreach ($tables as $table) {
-            DB::table($table->$key)->truncate();
-        }
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Storage::disk('public')->deleteDirectory('/');
-        Storage::disk('public')->makeDirectory('/');
-        Artisan::call('optimize:clear');
-        return 'Database flushed & images cleared successfully!';
-    });
+Route::get('/flush-system', function () {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    $tables = DB::select('SHOW TABLES');
+    $dbName = env('DB_DATABASE');
+    $key = "Tables_in_$dbName";
+    foreach ($tables as $table) {
+        DB::table($table->$key)->truncate();
+    }
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    Storage::disk('public')->deleteDirectory('/');
+    Storage::disk('public')->makeDirectory('/');
+    Artisan::call('optimize:clear');
+    return 'Database flushed & images cleared successfully!';
+});
 
-    Route::get('/clear-cache', function () {
-        Artisan::call('optimize:clear');
-        return 'Cache Cleared!';
-    });
+Route::get('/clear-cache', function () {
+    Artisan::call('optimize:clear');
+    return 'Cache Cleared!';
+});

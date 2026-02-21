@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('institution');
             $table->string('password');
-            $table->enum('status', ['pending', 'active', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'active', 'rejected', 'banned'])->default('pending');
             $table->string('role')->default('user');
             $table->timestamps();
         });
