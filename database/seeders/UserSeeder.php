@@ -40,5 +40,18 @@ class UserSeeder extends Seeder
             'status' => 'active',
             'role' => 'user',
         ]);
+
+
+        User::create([
+            'full_name' => 'Jane Smith',
+            'email' => 'jane.smith@example.com',
+            'phone' => '0987654321',
+            'institution' => 'Dexample University',
+            'password' => Hash::make('password123'),
+            'status' => 'active',
+            'role' => 'user',
+        ]);
+
+
     }
 }
